@@ -87,3 +87,20 @@ platformCommand
     console.log(`  New API Key: ${data.rawKey}`)
     console.log(`\n  Copy this key now — you won't see it again.`)
   })
+
+platformCommand
+  .command("update-scopes <identityId>")
+  .description("Update identity scopes")
+  .option("--add <scopes>", "Comma-separated scopes to add")
+  .option("--remove <scopes>", "Comma-separated scopes to remove")
+  .option("--json", "Output as JSON")
+  .action(async (identityId, opts, cmd) => {
+    const config = resolveConfig(cmd.optsWithGlobals())
+    const body: Record<string, string[]> = {}
+    if (opts.add) body.addScopes = opts.add.split(",").map((s: string) => s.trim())
+    if (opts.remove) body.removeScopes = opts.remove.split(",").map((s: string) => s.trim())
+    const data = await request<any>(config.baseUrl, config.apiKey, "PATCH", `/v0/platform/identities/${identityId}`, body)
+    if (opts.json) return jsonOut(data)
+    success(`Updated scopes for ${identityId}`)
+    console.log(`  Scopes: ${data.scopes.join(", ")}`)
+  })
