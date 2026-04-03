@@ -5,6 +5,7 @@ import { threadsCommand } from "./commands/threads"
 import { vaultCommand } from "./commands/vault"
 import { logsCommand } from "./commands/logs"
 import { didCommand } from "./commands/did"
+import { calendarCommand } from "./commands/calendar"
 import { platformCommand } from "./commands/platform"
 import { ApiError } from "./http"
 
@@ -21,6 +22,7 @@ program.addCommand(threadsCommand)
 program.addCommand(vaultCommand)
 program.addCommand(logsCommand)
 program.addCommand(didCommand)
+program.addCommand(calendarCommand)
 program.addCommand(platformCommand)
 
 program.parseAsync(process.argv).catch((err) => {
