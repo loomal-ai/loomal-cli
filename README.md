@@ -1,11 +1,11 @@
-# mailgent-cli
+# hivekey-cli
 
-The official CLI for the [Mailgent API](https://mailgent.dev) — identity infrastructure for AI agents.
+The official CLI for the [Hivekey API](https://hivekey.ai) — identity infrastructure for AI agents.
 
 ## Install
 
 ```bash
-npm install -g mailgent-cli
+npm install -g hivekey-cli
 ```
 
 Requires Node.js 18 or later.
@@ -14,10 +14,10 @@ Requires Node.js 18 or later.
 
 ```bash
 # Set your API key
-export MAILGENT_API_KEY=your_api_key
+export HIVEKEY_API_KEY=your_api_key
 
 # Verify your identity
-mailgent whoami
+hivekey whoami
 ```
 
 ## Authentication
@@ -26,10 +26,10 @@ Pass your API key in one of two ways:
 
 ```bash
 # Environment variable (recommended)
-export MAILGENT_API_KEY=your_api_key
+export HIVEKEY_API_KEY=your_api_key
 
 # Or per-command flag
-mailgent whoami --api-key your_api_key
+hivekey whoami --api-key your_api_key
 ```
 
 ## Commands
@@ -37,58 +37,58 @@ mailgent whoami --api-key your_api_key
 ### Identity
 
 ```bash
-mailgent whoami                          # Show identity info
+hivekey whoami                          # Show identity info
 ```
 
 ### Mail
 
 ```bash
-mailgent mail send --to a@b.com --subject "Hi" --text "Hello"
-mailgent mail list [--limit 20] [--labels inbox]
-mailgent mail get <messageId>
-mailgent mail reply <messageId> --text "Reply"
-mailgent mail labels <messageId> --add important
-mailgent mail delete <messageId>
+hivekey mail send --to a@b.com --subject "Hi" --text "Hello"
+hivekey mail list [--limit 20] [--labels inbox]
+hivekey mail get <messageId>
+hivekey mail reply <messageId> --text "Reply"
+hivekey mail labels <messageId> --add important
+hivekey mail delete <messageId>
 ```
 
 ### Threads
 
 ```bash
-mailgent threads list [--limit 20]
-mailgent threads get <threadId>
-mailgent threads delete <threadId>
+hivekey threads list [--limit 20]
+hivekey threads get <threadId>
+hivekey threads delete <threadId>
 ```
 
 ### Vault
 
 ```bash
-mailgent vault list
-mailgent vault get <name>
-mailgent vault store <name> --type API_KEY --data '{"key":"sk_..."}'
-mailgent vault delete <name>
-mailgent vault totp <name>               # Get TOTP code
+hivekey vault list
+hivekey vault get <name>
+hivekey vault store <name> --type API_KEY --data '{"key":"sk_..."}'
+hivekey vault delete <name>
+hivekey vault totp <name>               # Get TOTP code
 ```
 
 ### Logs
 
 ```bash
-mailgent logs list [--category mail] [--status error]
-mailgent logs stats
+hivekey logs list [--category mail] [--status error]
+hivekey logs stats
 ```
 
 ### DID
 
 ```bash
-mailgent did resolve <identityId>        # Resolve DID document
-mailgent did domain                      # Resolve domain DID
+hivekey did resolve <identityId>        # Resolve DID document
+hivekey did domain                      # Resolve domain DID
 ```
 
 ## Global Options
 
 | Flag | Description |
 | --- | --- |
-| `--api-key <key>` | API key (or set `MAILGENT_API_KEY` env var) |
-| `--base-url <url>` | API base URL (or set `MAILGENT_API_URL` env var) |
+| `--api-key <key>` | API key (or set `HIVEKEY_API_KEY` env var) |
+| `--base-url <url>` | API base URL (or set `HIVEKEY_API_URL` env var) |
 | `--json` | Output as JSON |
 | `--help` | Show help |
 | `--version` | Show version |
@@ -98,16 +98,16 @@ mailgent did domain                      # Resolve domain DID
 Most commands support the `--json` flag for machine-readable output:
 
 ```bash
-mailgent whoami --json
-mailgent mail list --json
-mailgent vault list --json
+hivekey whoami --json
+hivekey mail list --json
+hivekey vault list --json
 ```
 
 ## Links
 
-- [Documentation](https://docs.mailgent.dev)
-- [Website](https://mailgent.dev)
-- [Node.js SDK](https://github.com/mailgent-dev/nodejs-sdk)
+- [Documentation](https://docs.hivekey.ai)
+- [Website](https://hivekey.ai)
+- [Node.js SDK](https://github.com/hivekey-ai/nodejs-sdk)
 
 ## License
 
