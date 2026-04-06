@@ -17,10 +17,12 @@ export const whoamiCommand = new Command("whoami")
       [
         ["Identity ID", data.identityId],
         ["Name", data.name],
+        ["Display Name", data.displayName || "—"],
         ["Email", data.email || "—"],
         ["Type", data.type],
         ["Scopes", (data.scopes || []).join(", ")],
         ["Usage", String(data.usageCount || 0)],
+        ["Last Used", data.lastUsedAt || "—"],
         ["Created", data.createdAt],
       ],
     )

@@ -8,12 +8,14 @@ export const threadsCommand = new Command("threads").description("Thread operati
 threadsCommand
   .command("list")
   .description("List threads")
-  .option("--limit <n>", "Max threads", "20")
+  .option("--limit <n>", "Max threads", "50")
+  .option("--page-token <token>", "Pagination cursor")
   .option("--json", "Output as JSON")
   .action(async (opts, cmd) => {
     const config = resolveConfig(cmd.optsWithGlobals())
     const params = new URLSearchParams()
     if (opts.limit) params.set("limit", opts.limit)
+    if (opts.pageToken) params.set("pageToken", opts.pageToken)
     const qs = params.toString()
     const data = await request<any>(config.baseUrl, config.apiKey, "GET", `/v0/threads${qs ? `?${qs}` : ""}`)
     if (opts.json) return jsonOut(data)
@@ -35,7 +37,7 @@ threadsCommand
     const config = resolveConfig(cmd.optsWithGlobals())
     const data = await request<any>(config.baseUrl, config.apiKey, "GET", `/v0/threads/${threadId}`)
     if (opts.json) return jsonOut(data)
-    console.log(`Thread: ${data.subject || "—"} (${data.totalMessages || 0} messages)\n`)
+    console.log(`Thread: ${data.subject || "—"} (${data.messages?.length || 0} messages)\n`)
     for (const msg of data.messages || []) {
       console.log(`  [${new Date(msg.createdAt).toLocaleString()}] ${(msg.from || []).join(", ")}`)
       if (msg.subject) console.log(`  Subject: ${msg.subject}`)

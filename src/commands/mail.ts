@@ -28,14 +28,16 @@ mailCommand
 mailCommand
   .command("list")
   .description("List messages")
-  .option("--limit <n>", "Max messages", "20")
+  .option("--limit <n>", "Max messages", "50")
   .option("--labels <labels>", "Filter by labels")
+  .option("--page-token <token>", "Pagination cursor")
   .option("--json", "Output as JSON")
   .action(async (opts, cmd) => {
     const config = resolveConfig(cmd.optsWithGlobals())
     const params = new URLSearchParams()
     if (opts.limit) params.set("limit", opts.limit)
     if (opts.labels) params.set("labels", opts.labels)
+    if (opts.pageToken) params.set("pageToken", opts.pageToken)
     const qs = params.toString()
     const data = await request<any>(config.baseUrl, config.apiKey, "GET", `/v0/messages${qs ? `?${qs}` : ""}`)
     if (opts.json) return jsonOut(data)

@@ -9,11 +9,13 @@ platformCommand
   .command("list")
   .description("List all identities")
   .option("--limit <n>", "Max identities", "50")
+  .option("--page-token <token>", "Pagination cursor")
   .option("--json", "Output as JSON")
   .action(async (opts, cmd) => {
     const config = resolveConfig(cmd.optsWithGlobals())
     const params = new URLSearchParams()
     if (opts.limit) params.set("limit", opts.limit)
+    if (opts.pageToken) params.set("pageToken", opts.pageToken)
     const qs = params.toString()
     const data = await request<any>(config.baseUrl, config.apiKey, "GET", `/v0/platform/identities${qs ? `?${qs}` : ""}`)
     if (opts.json) return jsonOut(data)
