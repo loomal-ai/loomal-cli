@@ -10,11 +10,11 @@ describe("http request", () => {
       json: () => Promise.resolve({ identityId: "id-123" }),
     })
     vi.stubGlobal("fetch", mockFetch)
-    await request("https://api.loomal.ai", "mgent-key", "GET", "/v0/whoami")
+    await request("https://api.loomal.ai", "loid-key", "GET", "/v0/whoami")
     expect(mockFetch).toHaveBeenCalledWith(
       "https://api.loomal.ai/v0/whoami",
       expect.objectContaining({
-        headers: expect.objectContaining({ Authorization: "Bearer mgent-key" }),
+        headers: expect.objectContaining({ Authorization: "Bearer loid-key" }),
       }),
     )
   })
@@ -29,7 +29,7 @@ describe("http request", () => {
 
   it("handles 204 no content", async () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, status: 204 }))
-    const result = await request("https://api.loomal.ai", "mgent-key", "DELETE", "/v0/messages/123")
+    const result = await request("https://api.loomal.ai", "loid-key", "DELETE", "/v0/messages/123")
     expect(result).toBeUndefined()
   })
 
@@ -39,7 +39,7 @@ describe("http request", () => {
       json: () => Promise.resolve({ messageId: "msg-1" }),
     })
     vi.stubGlobal("fetch", mockFetch)
-    await request("https://api.loomal.ai", "mgent-key", "POST", "/v0/messages/send", {
+    await request("https://api.loomal.ai", "loid-key", "POST", "/v0/messages/send", {
       to: ["a@b.com"], subject: "Hi", text: "Hello",
     })
     expect(mockFetch).toHaveBeenCalledWith(

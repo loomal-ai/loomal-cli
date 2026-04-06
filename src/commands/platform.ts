@@ -3,7 +3,7 @@ import { resolveConfig } from "../config"
 import { request } from "../http"
 import { table, json as jsonOut, success } from "../output"
 
-export const platformCommand = new Command("supervisor").description("Supervisor identity management")
+export const platformCommand = new Command("platform").description("Platform identity management")
 
 platformCommand
   .command("list")

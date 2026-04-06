@@ -14,20 +14,20 @@ describe("resolveConfig", () => {
 
   it("uses --api-key flag", async () => {
     const { resolveConfig } = await import("../src/config")
-    const config = resolveConfig({ apiKey: "mgent-test123" })
-    expect(config.apiKey).toBe("mgent-test123")
+    const config = resolveConfig({ apiKey: "loid-test123" })
+    expect(config.apiKey).toBe("loid-test123")
     expect(config.baseUrl).toBe("https://api.loomal.ai")
   })
 
   it("uses LOOMAL_API_KEY env var", async () => {
-    process.env.LOOMAL_API_KEY = "mgent-fromenv"
+    process.env.LOOMAL_API_KEY = "loid-fromenv"
     const { resolveConfig } = await import("../src/config")
     const config = resolveConfig({})
-    expect(config.apiKey).toBe("mgent-fromenv")
+    expect(config.apiKey).toBe("loid-fromenv")
   })
 
   it("uses custom base URL from env", async () => {
-    process.env.LOOMAL_API_KEY = "mgent-test"
+    process.env.LOOMAL_API_KEY = "loid-test"
     process.env.LOOMAL_API_URL = "http://localhost:3001"
     const { resolveConfig } = await import("../src/config")
     const config = resolveConfig({})
