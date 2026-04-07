@@ -107,7 +107,7 @@ loomal vault list --json
 
 - [Documentation](https://docs.loomal.ai)
 - [Website](https://loomal.ai)
-- [Node.js SDK](https://github.com/loomal-ai/nodejs-sdk)
+- [Node.js SDK](https://github.com/loomal-ai/loomal-node)
 
 ## License
 
