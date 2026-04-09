@@ -1,11 +1,14 @@
-# loomal-cli
+# @loomal/cli
 
 The official CLI for the [Loomal API](https://loomal.ai) — identity infrastructure for AI agents.
+
+[![npm](https://img.shields.io/npm/v/@loomal/cli)](https://www.npmjs.com/package/@loomal/cli)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 ## Install
 
 ```bash
-npm install -g loomal-cli
+npm install -g @loomal/cli
 ```
 
 Requires Node.js 18 or later.
