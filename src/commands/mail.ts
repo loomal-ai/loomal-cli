@@ -108,3 +108,65 @@ mailCommand
     await request(config.baseUrl, config.apiKey, "DELETE", `/v0/messages/${messageId}`)
     success(`Deleted message ${messageId}`)
   })
+
+// --- Email Rules (Allow/Block Lists) ---
+
+const rulesCommand = mailCommand
+  .command("rules")
+  .description("Manage allow/block lists")
+
+rulesCommand
+  .command("list")
+  .description("List all email rules")
+  .option("--json", "Output as JSON")
+  .action(async (opts, cmd) => {
+    const config = resolveConfig(cmd.optsWithGlobals())
+    const data = await request<any>(config.baseUrl, config.apiKey, "GET", "/v0/email-rules")
+    if (opts.json) return jsonOut(data)
+    if (!data.rules?.length) return console.log("No email rules configured.")
+    table(
+      ["ID", "Type", "Scope", "Value", "Created"],
+      data.rules.map((r: any) => [
+        r.id.slice(0, 12) + "...",
+        r.type,
+        r.scope,
+        r.value,
+        new Date(r.createdAt).toLocaleString(),
+      ]),
+    )
+  })
+
+rulesCommand
+  .command("add")
+  .description("Add an allow/block rule")
+  .requiredOption("--type <type>", "Rule type: ALLOW or BLOCK")
+  .requiredOption("--scope <scope>", "Rule scope: RECEIVE, SEND, or REPLY")
+  .requiredOption("--value <value>", "Email address or *@domain.com pattern")
+  .option("--json", "Output as JSON")
+  .action(async (opts, cmd) => {
+    const type = opts.type.toUpperCase()
+    const scope = opts.scope.toUpperCase()
+    if (!["ALLOW", "BLOCK"].includes(type)) {
+      console.error("Error: --type must be ALLOW or BLOCK")
+      process.exit(1)
+    }
+    if (!["RECEIVE", "SEND", "REPLY"].includes(scope)) {
+      console.error("Error: --scope must be RECEIVE, SEND, or REPLY")
+      process.exit(1)
+    }
+    const config = resolveConfig(cmd.optsWithGlobals())
+    const data = await request<any>(config.baseUrl, config.apiKey, "POST", "/v0/email-rules", {
+      type, scope, value: opts.value,
+    })
+    if (opts.json) return jsonOut(data)
+    success(`Added ${data.rule.type} rule for ${data.rule.scope}: ${data.rule.value}`)
+  })
+
+rulesCommand
+  .command("delete <ruleId>")
+  .description("Delete an email rule")
+  .action(async (ruleId, _opts, cmd) => {
+    const config = resolveConfig(cmd.optsWithGlobals())
+    await request(config.baseUrl, config.apiKey, "DELETE", `/v0/email-rules/${ruleId}`)
+    success(`Deleted rule ${ruleId}`)
+  })
