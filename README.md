@@ -67,10 +67,28 @@ loomal threads delete <threadId>
 ```bash
 loomal vault list
 loomal vault get <name>
-loomal vault store <name> --type API_KEY --data '{"key":"sk_..."}'
 loomal vault delete <name>
 loomal vault totp <name>               # Get TOTP code
+
+# Generic store — for any credential type
+loomal vault store <name> --type API_KEY --data '{"key":"sk_..."}'
+
+# Typed helpers (encrypted at rest)
+loomal vault store-api-key stripe --secret sk_live_...
+loomal vault store-api-key twitter --client-id abc123 --secret def456
+loomal vault store-card personal-visa \
+  --cardholder "Jane Doe" \
+  --number "4242 4242 4242 4242" \
+  --exp-month 12 --exp-year 2029 --cvc 123 \
+  --zip 94103 --brand Visa
+loomal vault store-address home \
+  --recipient "Autonomous Agent" \
+  --line1 "1 Demo Way" \
+  --city "San Francisco" --state CA --postcode 94103 --country US \
+  --phone "+1-555-0100"
 ```
+
+Credential types: `LOGIN`, `API_KEY`, `OAUTH`, `TOTP`, `SSH_KEY`, `DATABASE`, `SMTP`, `AWS`, `CERTIFICATE`, `CARD`, `SHIPPING_ADDRESS`, `CUSTOM`. The vault is password-manager-style secret storage (AES-256-GCM at rest), not a payment processor.
 
 ### Logs
 
