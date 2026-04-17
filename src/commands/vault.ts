@@ -175,4 +175,19 @@ vaultCommand
     const data = await request<any>(config.baseUrl, config.apiKey, "GET", `/v0/vault/${encodeURIComponent(name)}/totp`)
     if (opts.json) return jsonOut(data)
     console.log(`Code: ${data.code}  (expires in ${data.remaining}s)`)
+    if (typeof data.backupCodesRemaining === "number") {
+      console.log(`Backup codes remaining: ${data.backupCodesRemaining}`)
+    }
+  })
+
+vaultCommand
+  .command("totp-use-backup <name>")
+  .description("Consume one single-use TOTP backup code (atomic)")
+  .option("--json", "Output as JSON")
+  .action(async (name, opts, cmd) => {
+    const config = resolveConfig(cmd.optsWithGlobals())
+    const data = await request<any>(config.baseUrl, config.apiKey, "POST", `/v0/vault/${encodeURIComponent(name)}/totp/backup`)
+    if (opts.json) return jsonOut(data)
+    console.log(`Backup code: ${data.code}`)
+    console.log(`Backup codes remaining: ${data.remaining}`)
   })
