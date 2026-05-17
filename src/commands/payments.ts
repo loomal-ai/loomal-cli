@@ -26,8 +26,20 @@ export const payCommand = new Command("pay")
     if (opts.json) return jsonOut(result)
 
     if (!result || typeof result !== "object" || !("ok" in result)) {
-      error("Unexpected response from /v0/payments/pay")
-      jsonOut(result)
+      // Likely an auth-layer rejection (401/403) — the route returns
+      // `{ error, message, status }` before the pay flow runs.
+      const status = (result as { status?: number } | null)?.status
+      const errCode = (result as { error?: string } | null)?.error
+      const msg = (result as { message?: string } | null)?.message
+      if (status === 403 || errCode === "forbidden") {
+        error(`${msg ?? "Forbidden"}`)
+        console.error("\n`loomal pay` requires a BUYER project (payments:spend scope).")
+        console.error("If this is a SELLER key, create a BUYER project at https://console.loomal.ai")
+        console.error("or rotate this key to add the scope. Project type is set at create time.")
+      } else {
+        error("Unexpected response from /v0/payments/pay")
+        jsonOut(result)
+      }
       process.exit(1)
     }
 

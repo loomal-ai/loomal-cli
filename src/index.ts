@@ -17,7 +17,7 @@ import { ApiError } from "./http"
 const program = new Command()
   .name("loomal")
   .description("CLI for the Loomal API — identity infrastructure for AI agents")
-  .version("0.6.0")
+  .version("0.6.1")
   .option("--api-key <key>", "API key (or set LOOMAL_API_KEY)")
   .option("--base-url <url>", "API base URL (or set LOOMAL_API_URL)")
 
@@ -33,9 +33,25 @@ program.addCommand(activityCommand)
 program.addCommand(mandateCommand)
 program.addCommand(platformCommand)
 
+// Commands that need the BUYER role (i.e. `payments:spend` scope on the API key).
+// A SELLER project's key won't carry that scope and the API will return 403.
+const BUYER_ONLY_COMMANDS = new Set(["pay", "mandate", "activity"])
+
 program.parseAsync(process.argv).catch((err) => {
+  const subcommand = process.argv[2]
   if (err instanceof ApiError) {
     console.error(`Error [${err.status}]: ${err.message}`)
+    if (err.status === 403 && BUYER_ONLY_COMMANDS.has(subcommand)) {
+      console.error(
+        "\n`loomal " + subcommand + "` requires a BUYER project (payments:spend scope).",
+      )
+      console.error(
+        "If this is a SELLER key, create a BUYER project at https://console.loomal.ai",
+      )
+      console.error(
+        "or rotate this key to add the scope. Project type is set at create time.",
+      )
+    }
   } else {
     console.error(`Error: ${err.message}`)
   }
