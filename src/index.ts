@@ -7,12 +7,17 @@ import { logsCommand } from "./commands/logs"
 import { didCommand } from "./commands/did"
 import { calendarCommand } from "./commands/calendar"
 import { platformCommand } from "./commands/platform"
+import {
+  payCommand,
+  activityCommand,
+  mandateCommand,
+} from "./commands/payments"
 import { ApiError } from "./http"
 
 const program = new Command()
   .name("loomal")
   .description("CLI for the Loomal API — identity infrastructure for AI agents")
-  .version("0.2.0")
+  .version("0.6.0")
   .option("--api-key <key>", "API key (or set LOOMAL_API_KEY)")
   .option("--base-url <url>", "API base URL (or set LOOMAL_API_URL)")
 
@@ -23,6 +28,9 @@ program.addCommand(vaultCommand)
 program.addCommand(logsCommand)
 program.addCommand(didCommand)
 program.addCommand(calendarCommand)
+program.addCommand(payCommand)
+program.addCommand(activityCommand)
+program.addCommand(mandateCommand)
 program.addCommand(platformCommand)
 
 program.parseAsync(process.argv).catch((err) => {
