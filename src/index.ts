@@ -17,7 +17,7 @@ import { ApiError } from "./http"
 const program = new Command()
   .name("loomal")
   .description("CLI for the Loomal API — identity infrastructure for AI agents")
-  .version("0.6.1")
+  .version("0.6.2")
   .option("--api-key <key>", "API key (or set LOOMAL_API_KEY)")
   .option("--base-url <url>", "API base URL (or set LOOMAL_API_URL)")
 

@@ -50,22 +50,37 @@ platformCommand
 
 platformCommand
   .command("create")
-  .description("Create a new identity")
-  .requiredOption("--name <name>", "Display name")
-  .requiredOption("--email <emailName>", "Email prefix (e.g. salesagent)")
-  .requiredOption("--scopes <scopes>", "Comma-separated scopes (e.g. mail:read,mail:send)")
+  .description("Create a new identity. All flags optional — defaults to BUYER with a fresh 3-word slug name + matching inbox.")
+  .option("--purpose <BUYER|SELLER>", "Project type (default BUYER)")
+  .option("--name <name>", "Display name (default: server-picked slug)")
+  .option("--email <emailName>", "Email prefix override (BUYER only; default: server-picked slug)")
+  .option("--scopes <scopes>", "Comma-separated scopes (default: per-purpose defaults)")
   .option("--json", "Output as JSON")
   .action(async (opts, cmd) => {
     const config = resolveConfig(cmd.optsWithGlobals())
-    const data = await request<any>(config.baseUrl, config.apiKey, "POST", "/v0/platform/identities", {
-      name: opts.name, emailName: opts.email, scopes: opts.scopes.split(",").map((s: string) => s.trim()),
-    })
+    const body: Record<string, unknown> = {}
+    if (opts.purpose) body.purpose = opts.purpose
+    if (opts.name) body.name = opts.name
+    if (opts.email) body.emailName = opts.email
+    if (opts.scopes) body.scopes = opts.scopes.split(",").map((s: string) => s.trim())
+    const data = await request<any>(config.baseUrl, config.apiKey, "POST", "/v0/platform/identities", body)
     if (opts.json) return jsonOut(data)
     success(`Created identity "${data.name}"`)
     console.log(`  Identity ID: ${data.identityId}`)
-    console.log(`  Email: ${data.emailAddress}`)
+    console.log(`  Email: ${data.emailAddress ?? "—"}`)
     console.log(`  API Key: ${data.rawKey}`)
     console.log(`\n  Copy this key now — you won't see it again.`)
+  })
+
+platformCommand
+  .command("rename <identityId> <name>")
+  .description("Update an identity's display name. The inbox email address is immutable.")
+  .option("--json", "Output as JSON")
+  .action(async (identityId, name, opts, cmd) => {
+    const config = resolveConfig(cmd.optsWithGlobals())
+    const data = await request<any>(config.baseUrl, config.apiKey, "PATCH", `/v0/platform/identities/${identityId}`, { name })
+    if (opts.json) return jsonOut(data)
+    success(`Renamed ${identityId} → "${data.name}"`)
   })
 
 platformCommand
