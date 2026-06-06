@@ -1,9 +1,9 @@
 # @loomal/cli — deprecated
 
 > [!WARNING]
-> **Loomal is now [Mailgent](https://mailgent.dev).** This package is deprecated — please migrate to **[`@mailgent-dev/cli`](https://www.npmjs.com/package/@mailgent-dev/cli)**.
+> **`@loomal/cli` is deprecated.** Please use **[`@mailgent-dev/cli`](https://www.npmjs.com/package/@mailgent-dev/cli)** instead.
 
-`@loomal/cli` now ships as a compatibility shim: the `loomal` command still works but targets `https://api.mailgent.dev`. No new features will be added here.
+This package now ships as a compatibility shim: the `loomal` command still works but targets `https://api.mailgent.dev`. No new features will be added here.
 
 ## Migrate
 
