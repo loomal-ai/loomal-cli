@@ -14,12 +14,17 @@ import {
 } from "./commands/payments"
 import { ApiError } from "./http"
 
+// One-time deprecation notice (stderr only, so it never pollutes --json/stdout).
+console.error(
+  "[loomal CLI] deprecated — install @mailgent-dev/cli (the 'mailgent' command). https://docs.mailgent.dev/migrate. Now targeting api.mailgent.dev.",
+)
+
 const program = new Command()
   .name("loomal")
   .description("CLI for the Loomal API — identity infrastructure for AI agents")
-  .version("0.6.2")
-  .option("--api-key <key>", "API key (or set LOOMAL_API_KEY)")
-  .option("--base-url <url>", "API base URL (or set LOOMAL_API_URL)")
+  .version("0.7.0")
+  .option("--api-key <key>", "API key (or set MAILGENT_API_KEY / legacy LOOMAL_API_KEY)")
+  .option("--base-url <url>", "API base URL (or set MAILGENT_API_URL / legacy LOOMAL_API_URL)")
 
 program.addCommand(whoamiCommand)
 program.addCommand(mailCommand)
