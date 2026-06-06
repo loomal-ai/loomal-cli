@@ -1,5 +1,20 @@
 # @loomal/cli
 
+> ## ⚠️ DEPRECATED — use [`@mailgent/cli`](https://www.npmjs.com/package/@mailgent/cli)
+>
+> `@loomal/cli` is deprecated and is now a compatibility shim. It still works
+> (the `loomal` command is unchanged) but now targets `api.mailgent.dev`.
+>
+> **Please migrate to `@mailgent/cli`** (the `mailgent` command):
+>
+> ```bash
+> npm install -g @mailgent/cli
+> ```
+>
+> - New primary env vars: `MAILGENT_API_KEY` / `MAILGENT_API_URL`
+>   (legacy `LOOMAL_API_KEY` / `LOOMAL_API_URL` still work as fallbacks).
+> - Migration guide: https://docs.mailgent.dev/migrate
+
 The official CLI for the [Loomal API](https://loomal.ai) — identity infrastructure for AI agents.
 
 [![npm](https://img.shields.io/npm/v/@loomal/cli)](https://www.npmjs.com/package/@loomal/cli)
@@ -16,8 +31,8 @@ Requires Node.js 18 or later.
 ## Quick Start
 
 ```bash
-# Set your API key
-export LOOMAL_API_KEY=your_api_key
+# Set your API key (legacy LOOMAL_API_KEY still works as a fallback)
+export MAILGENT_API_KEY=your_api_key
 
 # Verify your identity
 loomal whoami
@@ -29,7 +44,7 @@ Pass your API key in one of two ways:
 
 ```bash
 # Environment variable (recommended)
-export LOOMAL_API_KEY=your_api_key
+export MAILGENT_API_KEY=your_api_key   # legacy LOOMAL_API_KEY still accepted
 
 # Or per-command flag
 loomal whoami --api-key your_api_key
@@ -108,8 +123,8 @@ loomal did domain                      # Resolve domain DID
 
 | Flag | Description |
 | --- | --- |
-| `--api-key <key>` | API key (or set `LOOMAL_API_KEY` env var) |
-| `--base-url <url>` | API base URL (or set `LOOMAL_API_URL` env var) |
+| `--api-key <key>` | API key (or set `MAILGENT_API_KEY`; legacy `LOOMAL_API_KEY` accepted) |
+| `--base-url <url>` | API base URL (or set `MAILGENT_API_URL`; legacy `LOOMAL_API_URL` accepted). Defaults to `https://api.mailgent.dev` |
 | `--json` | Output as JSON |
 | `--help` | Show help |
 | `--version` | Show version |
