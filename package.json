@@ -1,8 +1,8 @@
 {
   "name": "@loomal/cli",
   "version": "0.7.0",
-  "description": "DEPRECATED — use @mailgent/cli. Compatibility shim that targets api.mailgent.dev. CLI for identity infrastructure for AI agents.",
-  "deprecated": "@loomal/cli is deprecated. Install @mailgent/cli (the 'mailgent' command). See https://docs.mailgent.dev/migrate",
+  "description": "DEPRECATED — use @mailgent-dev/cli. Compatibility shim that targets api.mailgent.dev. CLI for identity infrastructure for AI agents.",
+  "deprecated": "@loomal/cli is deprecated. Install @mailgent-dev/cli (the 'mailgent' command). See https://docs.mailgent.dev/migrate",
   "bin": {
     "loomal": "dist/index.js"
   },

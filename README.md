@@ -1,14 +1,14 @@
 # @loomal/cli
 
-> ## ⚠️ DEPRECATED — use [`@mailgent/cli`](https://www.npmjs.com/package/@mailgent/cli)
+> ## ⚠️ DEPRECATED — use [`@mailgent-dev/cli`](https://www.npmjs.com/package/@mailgent-dev/cli)
 >
 > `@loomal/cli` is deprecated and is now a compatibility shim. It still works
 > (the `loomal` command is unchanged) but now targets `api.mailgent.dev`.
 >
-> **Please migrate to `@mailgent/cli`** (the `mailgent` command):
+> **Please migrate to `@mailgent-dev/cli`** (the `mailgent` command):
 >
 > ```bash
-> npm install -g @mailgent/cli
+> npm install -g @mailgent-dev/cli
 > ```
 >
 > - New primary env vars: `MAILGENT_API_KEY` / `MAILGENT_API_URL`

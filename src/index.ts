@@ -16,7 +16,7 @@ import { ApiError } from "./http"
 
 // One-time deprecation notice (stderr only, so it never pollutes --json/stdout).
 console.error(
-  "[loomal CLI] deprecated — install @mailgent/cli (the 'mailgent' command). https://docs.mailgent.dev/migrate. Now targeting api.mailgent.dev.",
+  "[loomal CLI] deprecated — install @mailgent-dev/cli (the 'mailgent' command). https://docs.mailgent.dev/migrate. Now targeting api.mailgent.dev.",
 )
 
 const program = new Command()
